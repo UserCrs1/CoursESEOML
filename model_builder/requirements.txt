@@ -1,0 +1,8 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+transformers==4.37.2
+torch
+tensorflow-cpu==2.15.0
+safetensors
+h5py
+sentencepiece
