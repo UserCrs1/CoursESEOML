@@ -1,33 +1,27 @@
 version: '3.8'
 
 services:
-  # --- SERVICE 1 : Le travailleur de l'ombre ---
   builder:
-    # TO DO 1 : Définir le contexte de build
-    build: ...
-    # TO DO 2 : Lier un volume nommé "model_data" au dossier "/shared_model" du conteneur.
-    # C'est ici que le builder va sauvegarder les fichiers PyTorch et le Tokenizer.
+    build: ./model_builder
+    # SOLUTION TO DO 1 :
     volumes:
-      - ...
+      - model_data:/shared_model
 
-  # --- SERVICE 2 : Le serveur web ---
   api:
-  # TO DO 3 : Définir le contexte de build
-    build: ...
+    build: ./api
     ports:
       - "8000:8000"
-    # TO DO 4 : Lier le MÊME volume "model_data" au dossier "/shared_model" de ce conteneur.
-    # L'API pourra ainsi lire les fichiers téléchargés par le builder.
+    # SOLUTION TO DO 2 :
     volumes:
-      - ...
+      - model_data:/shared_model
       
-    # TO DO 5 : Synchronisation !
-    # L'API ne doit SURTOUT PAS démarrer en même temps que le builder. 
-    # Trouvez la condition exacte pour dire : "Attends que le builder s'éteigne avec succès".
+    # SOLUTION TO DO 3 :
     depends_on:
       builder:
-        condition: ...
+        # C'EST LE PIÈGE : Par défaut Docker utilise "service_started".
+        # Ici, il faut absolument "service_completed_successfully".
+        condition: "service_completed_successfully"
 
-# TO DO 6 : Ne pas oublier de déclarer le volume nommé globalement à la fin du fichier.
+# SOLUTION TO DO 4 :
 volumes:
-  ...
+  model_data:
