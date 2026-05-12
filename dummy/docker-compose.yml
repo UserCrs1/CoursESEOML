@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # --- SERVICE 1 : Le Générateur de modèles ---
+  generateur:
+    build: ./dummy_model
+    volumes:
+      # On crée un dossier local "shared_model_dummy" qui correspond au dossier du conteneur
+      - ./shared_model_dummy:/shared_model_dummy
+
+  # --- SERVICE 2 : L'API FastAPI ---
+  api:
+    build: ./dummy_model_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # L'API est branchée sur le MÊME dossier local pour lire les fichiers .pkl
+      - ./shared_model_dummy:/shared_model_dummy
+    depends_on:
+      generateur:
+        # L'API attend que le générateur ait terminé (Exit 0) avant de s'allumer
+        condition: service_completed_successfully
