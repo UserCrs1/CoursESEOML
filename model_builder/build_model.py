@@ -1,27 +1,25 @@
 import os
-# TO DO 1 : Importer les classes AutoModelForSequenceClassification et AutoTokenizer de la librairie transformers
-# ...
+# SOLUTION TO DO 1
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 MODEL_NAME = "tblard/tf-allocine"
-MODEL_DIR = "/shared_model"  # Chemin absolu pour le volume Docker
+MODEL_DIR = "/shared_model"
 
 print(f"Téléchargement du modèle {MODEL_NAME}...")
 
-# TO DO 2 : Télécharger le modèle. 
-# ATTENTION : Ce modèle a été créé avec TensorFlow. 
-# Trouvez le paramètre booléen à ajouter pour le convertir automatiquement (pour PyTorch) lors du téléchargement.
+# SOLUTION TO DO 2
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_NAME,
-    # ??? = True
+    from_tf=True # Conversion TensorFlow -> PyTorch
 )
 
-# TO DO 3 : Télécharger le Tokenizer associé au modèle
-# tokenizer = ...
+# SOLUTION TO DO 3
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 os.makedirs(MODEL_DIR, exist_ok=True)
 
-# TO DO 4 : Sauvegarder LE MODÈLE ET LE TOKENIZER dans le dossier MODEL_DIR
-# model...
-# tokenizer...
+# SOLUTION TO DO 4
+model.save_pretrained(MODEL_DIR)
+tokenizer.save_pretrained(MODEL_DIR)
 
 print(f"Modèle et Tokenizer sauvegardés avec succès dans {MODEL_DIR}")
