@@ -2,35 +2,28 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import pipeline
 
-# Initialisation de l'application FastAPI
 app = FastAPI(title="API d'Analyse de Sentiment (Allociné)")
 
-# Le dossier où le modèle sera partagé par le Builder (via Docker Volume)
 MODEL_DIR = "/shared_model"
 
-# Définition du format de la requête attendue
 class TextRequest(BaseModel):
     text: str
 
-# TO DO 1 : Charger le modèle d'analyse de sentiment en mémoire.
-# Attention : Le modèle doit être chargé depuis MODEL_DIR (qui fera office de cache)
-# et non retéléchargé depuis internet.
+# SOLUTION TO DO 1 : 
+# On utilise pipeline en précisant que le modèle et le tokenizer se trouvent dans MODEL_DIR
 print("Chargement du modèle en mémoire...")
-# sentiment_analyzer = ... 
+sentiment_analyzer = pipeline("sentiment-analysis", model=MODEL_DIR, tokenizer=MODEL_DIR)
 print("Modèle prêt !")
-
 
 @app.post("/predict")
 async def predict_sentiment(request: TextRequest):
-    """
-    Cette route reçoit du texte et renvoie un sentiment (POSITIF/NEGATIF).
-    """
-    # TO DO 2 : Utiliser le modèle 'sentiment_analyzer' sur le texte reçu
-    # result = ...
+    # SOLUTION TO DO 2 :
+    # Le pipeline renvoie une liste contenant un dictionnaire. On prend le premier élément [0].
+    result = sentiment_analyzer(request.text)[0]
     
-    # TO DO 3 : Renvoyer un dictionnaire propre avec le texte, la prédiction et le score de confiance
+    # SOLUTION TO DO 3 :
     return {
         "text": request.text, 
-        "prediction": "Remplacer par le label du modèle",
-        "confidence": 0.0 # Remplacer par le score du modèle
+        "prediction": result['label'],
+        "confidence": round(result['score'], 4) # On arrondit pour faire plus propre
     }
