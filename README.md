@@ -53,5 +53,11 @@ Vous devrez impérativement utiliser les Volumes Docker pour que le modèle tél
 * **Docker Compose (`depends_on`) :** Gérer l'ordre de démarrage des services.
   👉 [Doc Docker Compose - depends_on](https://docs.docker.com/compose/compose-file/05-services/#depends_on)
 
+### 📖 Support de cours
+* **Cours MLOps :** Les bases du MLOps.
+  👉 [Support MLOps](https://fromsmash.com/Formation-ESEO-MLOps)
+* **Cours DevOps :** Les bases du DevOps.
+  👉 [Support DevOps](https://fromsmash.com/Formation-ESEO-DevOps)
+
 ---
 *Bon code et bonne chance pour ce déploiement !* 👩‍💻👨‍💻
