@@ -55,9 +55,9 @@ Vous devrez impérativement utiliser les Volumes Docker pour que le modèle tél
 
 ### 📖 Support de cours
 * **Cours MLOps :** Les bases du MLOps.
-  👉 [Support MLOps](https://fromsmash.com/Formation-ESEO-MLOps)
+  👉 [Support MLOps](https://fromsmash.com/Formation-ESEO-MLOps1)
 * **Cours DevOps :** Les bases du DevOps.
-  👉 [Support DevOps](https://fromsmash.com/Formation-ESEO-DevOps)
+  👉 [Support DevOps](https://fromsmash.com/Formation-ESEO-DevOps1)
 
 ---
 *Bon code et bonne chance pour ce déploiement !* 👩‍💻👨‍💻
